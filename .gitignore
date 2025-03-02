@@ -1,0 +1,13 @@
+.idea/
+.env
+venv
+env
+.env/
+venv/
+env/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.sqlite3
+**/target/

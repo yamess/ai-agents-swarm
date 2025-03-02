@@ -1,0 +1,3 @@
+[workspace]
+resolver = "3"
+members = [ "agent", "core" , "hr_agent", "journalist_agent", "lawyer_agent", "manager_agent", "salesman_agent", "swe_agent", "teach_lead_agent"]
