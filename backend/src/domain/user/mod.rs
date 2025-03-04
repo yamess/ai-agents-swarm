@@ -1,1 +1,2 @@
-mod entities;
+mod model;
+mod repository;
