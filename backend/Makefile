@@ -3,3 +3,9 @@ create-mig:
 
 run-mig:
 	diesel migration run
+
+run:
+	cargo run -- --config-path="./configs/dev.toml" --secret-path="./secrets"
+
+watch:
+	cargo watch -x 'run -- --config-path="configs/dev.toml" --secret-path="secrets"'
