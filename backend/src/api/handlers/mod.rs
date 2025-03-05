@@ -1,1 +1,2 @@
-mod probe;
+pub mod probe;
+

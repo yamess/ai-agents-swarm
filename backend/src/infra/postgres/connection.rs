@@ -23,6 +23,6 @@ pub fn establish_connection(database_url: &str) -> Arc<DbPool> {
 }
 
 pub fn get_connection(pool: Arc<DbPool>) -> Result<DbConnection> {
-    let connection = pool.get().map_err(|e| Error::Connection(e.to_string()))?;
+    let connection = pool.get().map_err(|e| Error::PostgresConnectionError(e.to_string()))?;
     Ok(connection)
 }

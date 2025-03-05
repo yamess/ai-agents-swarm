@@ -1,16 +1,19 @@
-use std::path::Path;
+use std::fs;
+use std::path::{Path, PathBuf};
 use serde::Deserialize;
 use crate::prelude::*;
 
 
-#[derive(Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct Secrets {
-    pub postgres_connection_string: String,
+    postgres_connection_string: String,
 }
 impl Secrets {
     pub fn new<P: AsRef<Path>>(secret_path: P) -> Self {
+        let base_path = PathBuf::from(secret_path.as_ref());
+        let pg_connection_string = Self::read_secret_file(&base_path.join("postgres-connection-string")).unwrap();
         Self {
-            postgres_connection_string: Self::read_secret_file(&secret_path).unwrap(),
+            postgres_connection_string: pg_connection_string,
         }
     }
 
@@ -34,8 +37,8 @@ pub struct AppConfig {
     pub log_level: String,
 }
 impl AppConfig {
-    pub fn new(config_path: &str) -> Self {
-        toml::from_str::<Self>(config_path).unwrap()
+    pub fn new(config_str: &str) -> Self {
+        toml::from_str::<Self>(config_str).unwrap()
     }
 }
 
@@ -46,12 +49,13 @@ pub struct Config {
 }
 impl Config {
     pub fn new(config_path: &str, secret_path: &str) -> Self {
+        let config_str = fs::read_to_string(&config_path).unwrap();
         Self {
-            app: AppConfig::new(config_path),
+            app: AppConfig::new(config_str.as_ref()),
             secrets: Secrets::new(secret_path),
         }
     }
-    pub fn config(&self) -> &AppConfig {
+    pub fn app(&self) -> &AppConfig {
         &self.app
     }
     pub fn secret(&self) -> &Secrets {
