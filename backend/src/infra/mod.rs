@@ -1,5 +1,5 @@
 mod schema;
-mod postgres;
+pub mod postgres;
 mod web;
 pub mod cli;
 pub mod config;

@@ -1,2 +1,2 @@
-mod connection;
-mod migrations;
+pub mod connection;
+pub mod migrations;
